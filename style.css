@@ -76,3 +76,11 @@ button:hover {
   align-items: center;
   color: #ae76a6;
 }
+footer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+footer a img {
+  width: 3rem;
+}
