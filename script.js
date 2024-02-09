@@ -29,7 +29,6 @@ const game = (function () {
 const play = (function () {
   let player = game.player1;
   let flag = true;
-  let tie = true;
   let winnerIS = "";
   const board = game.board;
   function turns() {
@@ -45,6 +44,7 @@ const play = (function () {
     return player;
   }
   function showboard() {
+    let tie = true;
     for (let i = 0; i < board.length; i++) {
       if (board[i][0] == "" || board[i][1] == "" || board[i][2] == "") {
         // checking if any cell is still empty
@@ -123,7 +123,7 @@ const play = (function () {
       board[row][col] = player.sign;
     }
     showboard();
-    if (flag || tie) {
+    if (flag) {
       turns();
     } else {
       flag = true;
