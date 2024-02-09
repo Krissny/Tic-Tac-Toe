@@ -29,6 +29,7 @@ const game = (function () {
 const play = (function () {
   let player = game.player1;
   let flag = true;
+  let tie = true;
   let winnerIS = "";
   const board = game.board;
   function turns() {
@@ -44,9 +45,9 @@ const play = (function () {
     return player;
   }
   function showboard() {
-    let tie = true;
     for (let i = 0; i < board.length; i++) {
       if (board[i][0] == "" || board[i][1] == "" || board[i][2] == "") {
+        // checking if any cell is still empty
         tie = false;
       }
       // console.log(`${board[i][0]} ${board[i][1]} ${board[i][2]}`);
@@ -64,6 +65,7 @@ const play = (function () {
     if (tie == true) {
       winnerIS = "Its a tie";
       tie = false;
+      player = game.player1;
       return;
     }
     function winner(val) {
@@ -121,7 +123,7 @@ const play = (function () {
       board[row][col] = player.sign;
     }
     showboard();
-    if (flag) {
+    if (flag || tie) {
       turns();
     } else {
       flag = true;
@@ -174,6 +176,8 @@ const screencontroller = (function () {
         btnContainer.appendChild(playAgain);
         cells.forEach((cell) => {
           cell.disabled = true;
+          change.disabled = true;
+          playerturn.textContent = "";
         });
       }
       updateScreen();
@@ -186,7 +190,7 @@ const screencontroller = (function () {
     } else {
       game.player1.name = name1.value;
       game.player2.name = name2.value;
-      playerturn.textContent = `${name1.value}'s turn`;
+      playerturn.textContent = `${play.getTurn().name}'s turn`;
       alert("Names changed");
     }
   });
@@ -194,8 +198,10 @@ const screencontroller = (function () {
     winner.textContent = "";
     game.reset();
     updateScreen();
+    playerturn.textContent = `${play.getTurn().name}'s turn`;
     cells.forEach((cell) => {
       cell.disabled = false;
+      change.disabled = false;
     });
     btnContainer.removeChild(playAgain);
   });
