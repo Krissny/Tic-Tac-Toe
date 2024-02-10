@@ -44,6 +44,7 @@ const play = (function () {
     return player;
   }
   function showboard() {
+    checkWinner();
     let tie = true;
     for (let i = 0; i < board.length; i++) {
       if (board[i][0] == "" || board[i][1] == "" || board[i][2] == "") {
@@ -52,7 +53,15 @@ const play = (function () {
       }
       // console.log(`${board[i][0]} ${board[i][1]} ${board[i][2]}`);
     }
-    checkWinner(tie);
+    if (tie == true && flag == true) {
+      winnerIS = "Its a tie";
+      tie = false;
+      player = game.player1;
+      flag = false;
+      return;
+    } else if (tie == true) {
+      tie = false;
+    }
   }
   function getWinner() {
     let temp = winnerIS;
@@ -61,13 +70,7 @@ const play = (function () {
     }
     return temp;
   }
-  function checkWinner(tie) {
-    if (tie == true) {
-      winnerIS = "Its a tie";
-      tie = false;
-      player = game.player1;
-      return;
-    }
+  function checkWinner() {
     function winner(val) {
       if (val == "X") {
         // console.log(`${game.player1.name} wins`);
